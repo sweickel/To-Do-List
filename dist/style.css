@@ -1,0 +1,273 @@
+body {
+  background-color: lightgrey;
+  margin: 0px;
+  min-width: 800px;
+  display: flex;
+  flex-direction: column;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+nav {
+  position: fixed;
+  height: 100%;
+  width: 300px;
+  margin: 5px;
+  background-color: whitesmoke;
+  border-radius: 5px;
+}
+
+#nameplate {
+  position: relative;
+  display: flex;
+  background-color: rgb(152, 67, 255);
+  color: white;
+  font-size: 40px;
+  margin: 1px;
+  height: 100px;
+  font-weight: 800;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5px;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+}
+
+.project {
+  margin: 5px 320px;
+  min-width: 400px;
+  width: 60%;
+  height: auto;
+  background-color: rgb(152, 67, 255);
+  box-shadow: 2px 2px black;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.items {
+  background-color: beige;
+  width: auto;
+  margin: 15px;
+  border-radius: 5px;
+  text-indent: 10px;
+  color: black;
+  box-shadow: 2px 2px 4px 2px black;
+}
+
+.task {
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  height: auto;
+}
+
+.attribute {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 100px;
+  text-align: center;
+  width: auto;
+  max-width: 300px;
+  min-height: 12px;
+  height: auto;
+  margin: 5px;
+}
+
+#box_1 {
+  min-height: 20px;
+  width: 98%;
+  display: flex;
+  text-align: left;
+  align-self: start;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: 400;
+  margin: 5px;
+  border-bottom: 1px solid gray;
+  border-width: 100%;
+}
+
+#box_2 {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#box_3 {
+  min-height: 25px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-items: center;
+}
+
+#head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: white;
+  display: flex;
+  flex-direction: column;
+  font-size: 35px;
+  font-weight: 800;
+  text-shadow: 2px 2px 2px black;
+  align-self: left;
+  text-align: left;
+  justify-content: left;
+  align-items: center;
+  margin: 15px;
+  margin-bottom: 5px;
+}
+
+.remove_project {
+  background-color: rgba(174, 0, 0, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: whitesmoke;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  width: 75px;
+  height: 50px;
+  align-self: end;
+  margin-right: 25px;
+  border: 1px solid black;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px black;
+}
+
+.remove_project:hover {
+  background-color: firebrick;
+}
+
+.task_remove {
+  width: 75px;
+  height: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  align-self: center;
+}
+
+.newTaskbtn {
+  font-size: 14px;
+  margin: 5px;
+}
+
+.task_add {
+  width: 75px;
+  height: 50px;
+  align-self: center;
+  margin-top: 10px;
+}
+
+#prio {
+  width: 92%;
+  height: 30px;
+  margin: 10px;
+  margin-left: 20px;
+}
+
+#edit_drop {
+  height: 30px;
+  width: 90%;
+  margin: 20px;
+  align-self: center;
+}
+
+.mod {
+  display: none;
+  flex-direction: column;
+  height: auto;
+  width: 75%;
+  margin: 10px;
+}
+
+input {
+  margin: 20px;
+  font-weight: 600;
+  font-size: 15px;
+}
+
+.edit_modal {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  min-height: 150px;
+  width: 375px;
+  background-color: beige;
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px 2px;
+  border-radius: 5px;
+  margin-top: 135px;
+  margin-left: 50px;
+  align-self: center;
+}
+
+.modal_display {
+  height: 25px;
+  width: auto;
+  background-color: rgb(152, 67, 255);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#edit_submit {
+  width: 60px;
+  height: 35px;
+  border-radius: 5px;
+  box-shadow: 1px 1px 2px black;
+  align-self: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+#mod_lab {
+  margin-left: 25px;
+  color: white;
+  font-weight: 600;
+}
+
+#close_modal {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px;
+  box-shadow: 2px 2px 4px;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "to-do-list",
+  "version": "1.0.0",
+  "description": "Project from The Odin Project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sweickel/To-Do-List.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sweickel/To-Do-List/issues"
+  },
+  "homepage": "https://github.com/sweickel/To-Do-List#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "babel-loader": "^8.1.0",
+    "css-loader": "^4.3.0",
+    "file-loader": "^6.1.0",
+    "style-loader": "^1.2.1"
+  }
+}
