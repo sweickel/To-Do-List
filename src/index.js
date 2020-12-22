@@ -37,6 +37,7 @@ function render() {
     const projPanel = document.createElement("div");
     projPanel.classList.add("proj_panel");
     projPanel.innerHTML = el.title;
+    projPanel.setAttribute("ind", index);
     document.getElementById("nav").appendChild(projPanel);
     project.appendChild(head);
     head.appendChild(title);
@@ -147,8 +148,22 @@ function render() {
         box1.id = "box_1";
         const box2 = document.createElement("div");
         box2.id = "box_2";
+        box2.style.display = "none";
         const box3 = document.createElement("div");
         box3.id = "box_3";
+        box3.style.display = "none";
+        box1.addEventListener("click", (event) => {
+          let b2 = document.getElementById("box_2");
+          let b3 = document.getElementById("box_3");
+          if (b2.style.display === "grid") {
+            b2.style.display = "none";
+            b3.style.display = "none";
+          } 
+            else if (b2.style.display === "none") {
+              document.getElementById("box_2").style.display = "grid";
+              document.getElementById("box_3").style.display = "flex";
+            }
+          });
 
         //append title
         const title = document.createElement("p");
