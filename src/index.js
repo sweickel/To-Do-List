@@ -59,6 +59,8 @@ function render() {
     titleLabel.setAttribute("for", "title");
     titleLabel.innerHTML = "Title";
     newTitle.type = "text";
+
+    //adds project to nav sidebar
     
       //adds  description attribute
     const newDesc = document.createElement("input");
@@ -140,6 +142,7 @@ function render() {
         //append title
         const title = document.createElement("p");
         title.innerHTML = cur.title;
+        title.id = "task_title";
         title.classList.add("attribute");
         title.addEventListener("click", (event) => {
           editTask("Task Title", title.innerHTML, cur);
@@ -156,6 +159,7 @@ function render() {
         //append dueDate
         const dueDate = document.createElement("p");
         dueDate.innerHTML = cur.dueDate;
+        dueDate.id = "due_date";
         dueDate.classList.add("attribute");
         dueDate.addEventListener("click", (event) => {
           editTask("Due Date", dueDate.innerHTML, cur);
@@ -163,7 +167,7 @@ function render() {
 
         //append priority
         const priority = document.createElement("p");
-        priority.innerHTML = cur.priority;
+        priority.innerHTML = "Priority: <br>" + cur.priority;
         priority.classList.add("attribute");
         priority.addEventListener("click", (event) => {
           editTask("Priority", priority.innerHTML, cur);
@@ -185,9 +189,10 @@ function render() {
         task.appendChild(box2);
         task.appendChild(box3);
         box1.appendChild(title);
+        box1.appendChild(dueDate);
         box2.appendChild(description);
         box2.appendChild(box3);        
-        box3.appendChild(dueDate);
+        
         box3.appendChild(priority);
         box2.appendChild(delTask);
     }; 
@@ -223,8 +228,19 @@ function openEditMod() {
   document.querySelector(".edit_modal").style.display = "flex";
 }
 
-//create new project
-function addProj() {   
+//set event listener for all projects button
+function allProj() {
+  let proj = document.getElementById("all_proj");
+  proj.addEventListener("click", (event) => {
+    
+   
+
+      //MAKE THIS DISPLAY ALL PROJECTS IN DISPLAY PANE
+
+
+
+
+  })
 }
 
 //edit task
@@ -360,6 +376,7 @@ function editTask(att, val, el) {
 //call render on page load
 window.addEventListener('load', (event) => {
   closeEditMod();
+  allProj();
   render();
 });
 
