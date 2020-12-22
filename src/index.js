@@ -8,10 +8,17 @@ projects.push(new Project("default"));
 function render() {  
   //clears DOM
   const content = document.querySelector('.content');
+  const nav = document.querySelector("nav");
   const projectsLength = content.children.length;
+  const navLength = nav.children.length;
   for (let i = projectsLength - 1; i >= 0; i--) {
       content.removeChild(content.children[i]);
-    };
+  }
+
+  for (let j = navLength - 1; j > 2; j--) {
+    nav.removeChild(nav.children[j]);
+  }
+    
 
   //create new element for each project element
   projects.forEach((el, index) => {
@@ -27,6 +34,10 @@ function render() {
     title.addEventListener("click", (event) => {
       editTask("Project Title", title.innerHTML, el);
     });
+    const projPanel = document.createElement("div");
+    projPanel.classList.add("proj_panel");
+    projPanel.innerHTML = el.title;
+    document.getElementById("nav").appendChild(projPanel);
     project.appendChild(head);
     head.appendChild(title);
     const btn = document.createElement("button");
@@ -48,7 +59,7 @@ function render() {
     project.appendChild(items);
     items.classList.add("items");
     
-    //creates form
+//creates form
       //creates task div and title
     const modal = document.createElement("div");
     modal.classList.add("mod");
@@ -167,7 +178,8 @@ function render() {
 
         //append priority
         const priority = document.createElement("p");
-        priority.innerHTML = "Priority: <br>" + cur.priority;
+        priority.innerHTML = "Priority:<br>" + cur.priority;
+        priority.id = "priority";
         priority.classList.add("attribute");
         priority.addEventListener("click", (event) => {
           editTask("Priority", priority.innerHTML, cur);
@@ -191,10 +203,10 @@ function render() {
         box1.appendChild(title);
         box1.appendChild(dueDate);
         box2.appendChild(description);
-        box2.appendChild(box3);        
-        
+        box2.appendChild(box3);                
         box3.appendChild(priority);
         box2.appendChild(delTask);
+        
     }; 
     items.appendChild(modal);
     modal.appendChild(titleLabel)
@@ -228,8 +240,10 @@ function openEditMod() {
   document.querySelector(".edit_modal").style.display = "flex";
 }
 
-//set event listener for all projects button
+//
 function allProj() {
+
+  //set event listener for all projects button
   let proj = document.getElementById("all_proj");
   proj.addEventListener("click", (event) => {
     
@@ -240,8 +254,24 @@ function allProj() {
 
 
 
+  });
+
+
+  //set event listener for new project
+  let newp = document.getElementById("new_proj");
+  newp.addEventListener("click", (event) => {
+    projects.push(new Project("Untitled"))
+
+    render();
   })
+
+
+
+
+
 }
+
+
 
 //edit task
 function editTask(att, val, el) {
