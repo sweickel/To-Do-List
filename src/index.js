@@ -22,10 +22,166 @@ function render() {
 
   //create new element for each project element
   projects.forEach((el, index) => {
-    const project = document.createElement("div");    
+    const projPanel = document.createElement("div");
+    projPanel.classList.add("proj_panel");
+    projPanel.innerHTML = el.title;
+    projPanel.setAttribute("ind", index);
+    document.getElementById("nav").appendChild(projPanel);
+    projPanel.addEventListener("click", (event) => {
+        render()
+        showProject(el);
+    })
+  })
+}
+
+//universal functions
+function taskForm(el) {
+  const newtask = document.getElementById("new_task");
+  newtask.style.display = "flex";
+  const content = document.getElementById('new_task');
+  const projectsLength = content.children.length;
+  for (let i = projectsLength - 1; i > 0; i--) {
+      content.removeChild(content.children[i]);
+  }
+    //creates form
+      //creates task div and title
+      const modal = document.createElement("div");
+      modal.classList.add("mod");
+      const taskInput = document.createElement("form");
+      const newTitle = document.createElement("input");
+      newTitle.required = true;
+      newTitle.id = "title";
+      newTitle.placeholder = "Untitled Task";
+      const titleLabel = document.createElement("label");
+      titleLabel.setAttribute("for", "title");
+      titleLabel.innerHTML = "Title";
+      newTitle.type = "text";
+      
+        //adds  description attribute
+      const newDesc = document.createElement("input");
+      newDesc.id = "desc";
+      newDesc.required = true;
+      newDesc.placeholder = "Enter Description";
+      const descLabel = document.createElement("label");
+      descLabel.setAttribute("for", "desc");
+      descLabel.innerHTML = "Description";
+      newDesc.type = "text";
+      
+        //adds  dueDate attribute
+      const newDate = document.createElement("input");
+      newDate.type = "date";
+      newDate.id = "date";
+      newDate.required = true;
+      const dateLabel = document.createElement("label");
+      dateLabel.setAttribute("for", "date");
+      dateLabel.innerHTML = "Date";
+      
+        //adds priority attribute
+      const newPrio = document.createElement("select");
+      newPrio.id = "prio";
+      newPrio.required = true;
+      newPrio.selectedIndex = "0";
+      const prioLabel = document.createElement("label");
+      prioLabel.setAttribute("for", "prio");
+      prioLabel.innerHTML = "Priority";
+      newPrio.name = "prio";
+      const opt1 = document.createElement("option");
+      const opt2 = document.createElement("option");
+      const opt3 = document.createElement("option");
+      opt1.value = "Low";
+      opt1.text = "Low";
+      opt2.value = "Medium";
+      opt2.text = "Medium";
+      opt3.value = "High";
+      opt3.text = "High";
+      
+      //adds add task button
+      const addTask = document.createElement("button");
+          addTask.type = "button";
+          addTask.classList.add("task_add");
+          addTask.innerHTML = "Add Task";
+          addTask.addEventListener("click", (event) => {
+            let a = document.getElementById("title");
+            let b = document.getElementById("desc");
+            let c = document.getElementById("date");
+            let d = document.getElementById("prio");
+            
+      if (a.checkValidity() === false || b.checkValidity() === false || c.checkValidity() === false || d.checkValidity() === false) {
+        alert("Please complete all fields.", "Ok");
+      } 
+      
+        else {
+          el.tasks.push(new Task(a.value,b.value,c.value,d.value));
+          let taskdiv = document.getElementById("new_task");
+          taskdiv.style.display = "none";
+          render();
+        }
+      });
+
+      const disp = document.getElementById('form_top_bar');
+      const dispLength = disp.children.length;
+      if (dispLength > 0) {
+        for (let i = dispLength - 1; i > 0; i--) {
+          disp.removeChild(disp.children[i]);
+        }
+      }
+      let lab = document.createElement("label");
+      lab.id = "mod_lab";
+      lab.innerHTML = "New Task";
+
+      disp.appendChild(lab);
+  
+      newtask.appendChild(modal);
+      modal.appendChild(titleLabel);
+      modal.appendChild(newTitle);
+      modal.appendChild(descLabel);
+      modal.appendChild(newDesc);
+      modal.appendChild(dateLabel);
+      modal.appendChild(newDate);
+      modal.appendChild(prioLabel);
+      modal.appendChild(newPrio); 
+      newPrio.add(opt1);
+      newPrio.add(opt2);
+      newPrio.add(opt3);
+      modal.appendChild(addTask);
+ }
+
+
+//sets event listeners globally
+function setListeners() {
+  let editMod = document.querySelector(".edit_modal");
+  let closeEditBtn = document.querySelector("#close_modal");
+  let taskdiv = document.getElementById("new_task");
+  let closeNewTask = document.getElementById("close_new_task");
+  let newp = document.getElementById("new_proj");
+
+  //event listeners for close button on edit and new task popups
+  closeNewTask.addEventListener("click", (event) => {
+    taskdiv.style.display = "none";
+  })
+
+  closeEditBtn.addEventListener("click", (event) => {
+    editMod.style.display = "none";
+  }); 
+  
+  //set event listener for new project  
+  newp.addEventListener("click", (event) => {
+    projects.push(new Project("Untitled"))
+
+    render();
+    showProject(projects[projects.length - 1], projects.length - 1);
+  });
+
+
+}
+
+
+function showProject(el) {
+
+  const content = document.querySelector(".content");
+  const project = document.createElement("div");    
     content.appendChild(project);
     project.classList.add("project");
-    project.setAttribute("ind", index);
     const head = document.createElement("div");
     head.id = "head";
     const title = document.createElement("div");
@@ -34,19 +190,12 @@ function render() {
     title.addEventListener("click", (event) => {
       editTask("Project Title", title.innerHTML, el);
     });
-    const projPanel = document.createElement("div");
-    projPanel.classList.add("proj_panel");
-    projPanel.innerHTML = el.title;
-    projPanel.setAttribute("ind", index);
-    document.getElementById("nav").appendChild(projPanel);
     project.appendChild(head);
     head.appendChild(title);
     const btn = document.createElement("button");
     btn.classList.add("remove_project");
     btn.type = "button";
-    btn.innerHTML = "Delete";
-
-   
+    btn.innerHTML = "Delete";   
 
     //appends button to header in project
     head.appendChild(btn);
@@ -61,83 +210,15 @@ function render() {
     const items = document.createElement("div");
     project.appendChild(items);
     items.classList.add("items");
-    
-//creates form
-      //creates task div and title
-    const modal = document.createElement("div");
-    modal.classList.add("mod");
-    const taskInput = document.createElement("form");
-    const newTitle = document.createElement("input");
-    newTitle.id = "title";
-    const titleLabel = document.createElement("label");
-    titleLabel.setAttribute("for", "title");
-    titleLabel.innerHTML = "Title";
-    newTitle.type = "text";
 
-    //adds project to nav sidebar
-    
-      //adds  description attribute
-    const newDesc = document.createElement("input");
-    newDesc.id = "desc";
-    const descLabel = document.createElement("label");
-    descLabel.setAttribute("for", "desc");
-    descLabel.innerHTML = "Description";
-    newDesc.type = "text";
-    
-      //adds  dueDate attribute
-    const newDate = document.createElement("input");
-    newDate.type = "date";
-    newDate.id = "date";
-    const dateLabel = document.createElement("label");
-    dateLabel.setAttribute("for", "date");
-    dateLabel.innerHTML = "Date";
-    
-      //adds priority attribute
-    const newPrio = document.createElement("select");
-    newPrio.id = "prio";
-    const prioLabel = document.createElement("label");
-    prioLabel.setAttribute("for", "prio");
-    prioLabel.innerHTML = "Priority";
-    newPrio.name = "prio";
-    const opt1 = document.createElement("option");
-    const opt2 = document.createElement("option");
-    const opt3 = document.createElement("option");
-    opt1.value = "Low";
-    opt1.text = "Low";
-    opt2.value = "Medium";
-    opt2.text = "Medium";
-    opt3.value = "High";
-    opt3.text = "High";
-    
-    
       //shows and hides form for new task input
     const newTask = document.createElement("button");
     newTask.type = "button";
     newTask.innerHTML = "+"
     newTask.classList.add("newTaskbtn");
     newTask.addEventListener("click", (event) => {
-      if (modal.style.display === "flex") {
-        modal.style.display = "none";
-        newTask.innerHTML = "+";
-      } else {
-        modal.style.display = "flex";
-        newTask.innerHTML = "-";
-      }      
-    });
-      //submits new task information and renders page
-    const addTask = document.createElement("button");
-        addTask.type = "button";
-        addTask.classList.add("task_add");
-        addTask.innerHTML = "Add Task";
-        addTask.addEventListener("click", (event) => {
-          let a = document.querySelector("#title").value;
-          let b = document.querySelector("#desc").value;
-          let c = document.querySelector("#date").value;
-          let d = document.querySelector("#prio").value;
-          
-          el.tasks.push(new Task(a, b, c, d));
-          render();
-        });    
+        taskForm(el);    
+    });        
     
    //appends tasks to projects
     for (let i = 0; i < el.tasks.length; i++) {
@@ -153,17 +234,14 @@ function render() {
         box2.style.display = "none";
         const box3 = document.createElement("div");
         box3.id = "box_3";
-        box3.style.display = "none";
+        box3.style.display = "flex";
         box1.addEventListener("click", (event) => {
-          let b2 = document.getElementById("box_2");
-          let b3 = document.getElementById("box_3");
-          if (b2.style.display === "grid") {
-            b2.style.display = "none";
-            b3.style.display = "none";
+          let displayStatus = box1.parentNode.lastChild;
+          if (displayStatus.style.display === "none") {
+            displayStatus.style.display = "grid";
           } 
-            else if (b2.style.display === "none") {
-              document.getElementById("box_2").style.display = "grid";
-              document.getElementById("box_3").style.display = "flex";
+            else {
+              displayStatus.style.display = "none";
             }
           });
 
@@ -212,7 +290,7 @@ function render() {
           let ind = parent.getAttribute("ind");
           el.tasks.splice(ind, 1);
           render();
-        });          
+        });         
         items.appendChild(task);
         task.appendChild(box1);
         task.appendChild(box2);
@@ -224,67 +302,26 @@ function render() {
         box3.appendChild(priority);
         box2.appendChild(delTask);        
     }; 
-    items.appendChild(modal);
-    modal.appendChild(titleLabel)
-    modal.appendChild(newTitle);
-    modal.appendChild(descLabel);
-    modal.appendChild(newDesc);
-    modal.appendChild(dateLabel);
-    modal.appendChild(newDate);
-    modal.appendChild(prioLabel);
-    modal.appendChild(newPrio); 
-    newPrio.add(opt1);
-    newPrio.add(opt2);
-    newPrio.add(opt3);
-    items.appendChild(newTask);
-    modal.appendChild(addTask);
-  });  
-  console.log(projects);
-};
-//universal functions
+    items.appendChild(newTask);    
+  }
 
-  //close edit modal box
-function closeEditMod() {
-  let editMod = document.querySelector(".edit_modal");
-  let closeEditBtn = document.querySelector("#close_modal");
-  closeEditBtn.addEventListener("click", (event) => {
-    editMod.style.display = "none";
-  })  
-}
+  
 
-function openEditMod() {
-  document.querySelector(".edit_modal").style.display = "flex";
-}
+
+
 
 //
-function allProj() {
+function allProj(el) {
 
   //set event listener for all projects button
   let proj = document.getElementById("all_proj");
-  proj.addEventListener("click", (event) => {
+    proj.addEventListener("click", (event) => {
+    render()
     
-   
-
-      //MAKE THIS DISPLAY ALL PROJECTS IN DISPLAY PANE
-
-
-
-
+    projects.forEach((el) => {
+    showProject(el);
+    })
   });
-
-
-  //set event listener for new project
-  let newp = document.getElementById("new_proj");
-  newp.addEventListener("click", (event) => {
-    projects.push(new Project("Untitled"))
-
-    render();
-  })
-
-
-
-
-
 }
 
 
@@ -307,11 +344,6 @@ function editTask(att, val, el) {
       disp.removeChild(disp.children[i]);
     }
   }
-  //
-
-
-
-
   //populate edit display for selected task attribute
   let editMod = document.querySelector(".edit_modal");
   editMod.style.display = "flex";
@@ -329,8 +361,7 @@ function editTask(att, val, el) {
   lab.innerHTML = att;
 
   disp.appendChild(lab);
-  if (att === "Priority") {
-    
+  if (att === "Priority") {    
     let drop = document.createElement("select");
     drop.id = "edit_drop";
     const opt1 = document.createElement("option");
@@ -352,8 +383,7 @@ function editTask(att, val, el) {
       let date = document.createElement("input");
       date.type = "date";
       date.id = "edit_date";
-      editMod.appendChild(date);
-      
+      editMod.appendChild(date);      
     }
     else {
       let inp = document.createElement("input");
@@ -370,17 +400,8 @@ function editTask(att, val, el) {
     lab.setAttribute("for", "editInput");
     editMod.appendChild(inp);
     inp.focus()
-    }
-  
+    }  
   editMod.appendChild(butt);
-  
-  
-  
-  
-  
-
-  
-
   
   //event listeners for submitting edited attribute
   butt.addEventListener("click", (event) => {
@@ -409,27 +430,26 @@ function editTask(att, val, el) {
             case 'Project Title':
               el.title = edit;
               break;
-      }
-    
+      }    
     }
     editMod.style.display = "none";    
     render();
-  }
-
- 
+  } 
 }
+
 
 //call render on page load
 window.addEventListener('load', (event) => {
-  closeEditMod();
+  setListeners();
   allProj();
   render();
+  showProject(projects[0]);
 });
 
 
 //************ TEST TEST TEST TEST TEST TEST TEST ***********
 window.addEventListener('keydown', event => {
-  if (event.isComposing || event.keyCode === 107 ) {
+  if (event.isComposing || event.keyCode === 107) {
     projects.push(new Project("Untitled"))
     const cur = projects.length - 1;
     projects[cur].tasks.push(new Task("task 1", "description", "sometime", "high"));

@@ -196,6 +196,58 @@ nav {
   border-radius: 5px;
 }
 
+#new_task {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  min-height: 130px;
+  width: 325px;
+  height: auto;
+  background-color: #f4ebc3;
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px 2px;
+  border-radius: 5px;
+  margin-top: 135px;
+  margin-left: 50px;
+  align-self: center;
+}
+
+.mod {
+  height: 300px;
+  width: auto;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: center;
+  padding: 5px;
+}
+
+#form_top_bar {
+  height: 20px;
+  width: auto;
+  background-color: rgb(152, 67, 255);
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+#close_new_task {
+  width: 17px;
+  height: 17px;
+  margin-right: 5px;
+  font-size: 13px;
+  font-weight: 800;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0px;
+  box-shadow: 2px 2px 4px;
+}
+
 .remove_project:hover {
   background-color: #ab526b;
   color: white;
@@ -222,14 +274,13 @@ nav {
   width: 75px;
   height: 50px;
   align-self: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 #prio {
-  width: 92%;
+  width: auto;
   height: 30px;
-  margin: 10px;
-  margin-left: 20px;
+  margin-top: 5px;
 }
 
 #edit_drop {
@@ -239,18 +290,11 @@ nav {
   align-self: center;
 }
 
-.mod {
-  display: none;
-  flex-direction: column;
-  height: auto;
-  width: 75%;
-  margin: 10px;
-}
-
 input {
-  margin: 20px;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 15px;
+  margin-bottom: 10px;
+  margin-top: 5px;
 }
 
 .edit_modal {
@@ -259,7 +303,7 @@ input {
   position: absolute;
   min-height: 130px;
   width: 325px;
-  background-color: beige;
+  background-color: #f4ebc3;
   border: 1px solid black;
   box-shadow: 1px 1px 1px 2px;
   border-radius: 5px;
@@ -279,6 +323,10 @@ input {
   padding: 5px;
 }
 
+#editInput {
+  margin: 15px;
+}
+
 #edit_submit {
   width: 60px;
   height: 30px;
@@ -290,7 +338,7 @@ input {
   justify-content: center;
   font-size: 14px;
   font-weight: 600;
-  margin: 10px;
+  margin: 15px;
   margin-top: 0px;
 }
 
@@ -299,6 +347,7 @@ input {
   font-size: 18px;
   color: white;
   font-weight: 800;
+  text-shadow: 1px 1px black;
 }
 
 #close_modal {
