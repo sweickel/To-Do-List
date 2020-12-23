@@ -46,16 +46,18 @@ function render() {
     btn.type = "button";
     btn.innerHTML = "Delete";
 
-    //removes project on button click
-    btn.addEventListener("click", (event) => {
-      let parent = btn.parentNode;
+   
+
+    //appends button to header in project
+    head.appendChild(btn);
+     //removes project on button click
+     btn.addEventListener("click", (event) => {
+      let parent = btn.parentNode.parentNode;
       let ind = parent.getAttribute("ind");
       projects.splice(ind, 1);
       render();
     });
 
-    //appends button to header in project
-    head.appendChild(btn);
     const items = document.createElement("div");
     project.appendChild(items);
     items.classList.add("items");
@@ -220,8 +222,7 @@ function render() {
         box2.appendChild(description);
         box2.appendChild(box3);                
         box3.appendChild(priority);
-        box2.appendChild(delTask);
-        
+        box2.appendChild(delTask);        
     }; 
     items.appendChild(modal);
     modal.appendChild(titleLabel)
