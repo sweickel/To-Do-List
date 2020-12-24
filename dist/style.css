@@ -41,6 +41,15 @@ nav {
   background-color: #bca297;
 }
 
+#new_proj {
+  background-color: rgb(107, 177, 107);
+  width: 90%;
+}
+
+#new_proj:hover {
+  background-color: rgb(97, 165, 97);
+}
+
 #nameplate {
   position: relative;
   display: flex;

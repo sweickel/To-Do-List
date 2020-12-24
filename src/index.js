@@ -2,7 +2,7 @@ import { Project, Task } from "./construct";
 
 let projects = [];
 
-projects.push(new Project("default"));
+projects.push(new Project("Default"));
 
 //refreshes DOM
 function render() {  
@@ -115,6 +115,7 @@ function taskForm(el) {
           let taskdiv = document.getElementById("new_task");
           taskdiv.style.display = "none";
           render();
+          showProject(el);
         }
       });
 
@@ -169,7 +170,7 @@ function setListeners() {
     projects.push(new Project("Untitled"))
 
     render();
-    showProject(projects[projects.length - 1], projects.length - 1);
+    showProject(projects[projects.length - 1]);
   });
 
 
@@ -252,7 +253,7 @@ function showProject(el) {
         title.classList.add("attribute");
         title.addEventListener("click", (event) => {
           editTask("Task Title", title.innerHTML, cur);
-        });
+        });       
 
         //append description
         const description = document.createElement("p");
@@ -311,7 +312,7 @@ function showProject(el) {
 
 
 //
-function allProj(el) {
+function allProj() {
 
   //set event listener for all projects button
   let proj = document.getElementById("all_proj");
@@ -350,11 +351,9 @@ function editTask(att, val, el) {
 
   //submit button
   let butt = document.createElement("button");
-  butt.type = "button";
-  
+  butt.type = "button";  
   butt.id = "edit_submit";
-  butt.innerHTML = "Submit";
- 
+  butt.innerHTML = "Submit"; 
 
   let lab = document.createElement("label");
   lab.id = "mod_lab";
@@ -432,9 +431,9 @@ function editTask(att, val, el) {
               break;
       }    
     }
-    editMod.style.display = "none";    
+    editMod.style.display = "none";
     render();
-  } 
+  }  
 }
 
 
