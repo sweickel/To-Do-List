@@ -1,6 +1,7 @@
 import { Project, Task } from "./construct";
 
 let projects = [];
+let showAll = false;
 
 
 projects.push(new Project("Default"));
@@ -29,7 +30,8 @@ function render() {
     projPanel.setAttribute("ind", index);
     document.getElementById("nav").appendChild(projPanel);
     projPanel.addEventListener("click", (event) => {
-        render()
+        render();
+        showAll = false;
         showProject(el);
     })
   })
@@ -116,8 +118,13 @@ function taskForm(el) {
           let taskdiv = document.getElementById("new_task");
           taskdiv.style.display = "none";
           render();
-          showProject(el);
-        }
+          if (showAll === true) {
+            allProj();
+          } 
+            else {
+              showProject(el);
+            }
+          }
       });
 
       const disp = document.getElementById('form_top_bar');
@@ -148,14 +155,21 @@ function taskForm(el) {
       modal.appendChild(addTask);
  }
 
+function closeBoxes() {
+  let editMod = document.querySelector(".edit_modal");
+  let taskdiv = document.getElementById("new_task");
+  taskdiv.style.display = "none";
+  editMod.style.display = "none";
+}
 
 //sets event listeners globally
 function setListeners() {
   let editMod = document.querySelector(".edit_modal");
-  let closeEditBtn = document.querySelector("#close_modal");
   let taskdiv = document.getElementById("new_task");
+  let closeEditBtn = document.querySelector("#close_modal");
   let closeNewTask = document.getElementById("close_new_task");
   let newp = document.getElementById("new_proj");
+  let proj = document.getElementById("all_proj");
 
   //event listeners for close button on edit and new task popups
   closeNewTask.addEventListener("click", (event) => {
@@ -169,12 +183,15 @@ function setListeners() {
   //set event listener for new project  
   newp.addEventListener("click", (event) => {
     projects.push(new Project("Untitled"))
-
     render();
+    showAll = false;
     showProject(projects[projects.length - 1]);
   });
 
-
+    proj.addEventListener("click", (event) => {
+    render()
+    allProj();
+  });
 }
 
 
@@ -213,12 +230,13 @@ function showProject(el) {
     project.appendChild(items);
     items.classList.add("items");
 
-      //shows and hides form for new task input
+    //new task input
     const newTask = document.createElement("button");
     newTask.type = "button";
     newTask.innerHTML = "+Add Task";
     newTask.classList.add("newTaskbtn");
     newTask.addEventListener("click", (event) => {
+        closeBoxes();
         taskForm(el);    
     });        
     
@@ -307,30 +325,20 @@ function showProject(el) {
     items.appendChild(newTask);    
   }
 
-  
-
-
-
-
 //
 function allProj() {
-
-  //set event listener for all projects button
-  let proj = document.getElementById("all_proj");
-    proj.addEventListener("click", (event) => {
-    render()
-    
+    render();  
+    showAll = true;  
     projects.forEach((el) => {
     showProject(el);
     })
-  });
 }
 
 
 
 //edit task
 function editTask(att, val, el) {
-  
+  closeBoxes();
   //clears previous input from display  
   const content = document.querySelector('.edit_modal');
   const projectsLength = content.children.length;
@@ -440,7 +448,7 @@ function editTask(att, val, el) {
           let edit = document.querySelector("#editInput").value;          
           switch (att) {
             case 'Task Title':
-              el.title = edit;              
+              el.title = edit;
               break;
             case 'Description':
               el.description = edit;              
@@ -452,6 +460,9 @@ function editTask(att, val, el) {
     }
     editMod.style.display = "none";
     render();
+    if (showAll === true ) {
+      allProj();
+    }
   }  
 }
 
@@ -459,7 +470,6 @@ function editTask(att, val, el) {
 //call render on page load
 window.addEventListener('load', (event) => {
   setListeners();
-  allProj();
   render();
   showProject(projects[0]);
 });
