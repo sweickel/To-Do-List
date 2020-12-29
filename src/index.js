@@ -3,9 +3,6 @@ import { Project, Task } from "./construct";
 let projects = [];
 let showAll = false;
 
-
-projects.push(new Project("Default"));
-
 //refreshes DOM
 function render() {  
   //clears DOM
@@ -118,6 +115,7 @@ function taskForm(el) {
           let taskdiv = document.getElementById("new_task");
           taskdiv.style.display = "none";
           render();
+          setLocalStorage();
           if (showAll === true) {
             allProj();
           } 
@@ -184,8 +182,8 @@ function setListeners() {
   newp.addEventListener("click", (event) => {
     projects.push(new Project("Untitled"))
     render();
-    showAll = false;
-    showProject(projects[projects.length - 1]);
+    setLocalStorage();
+    allProj();
   });
 
     proj.addEventListener("click", (event) => {
@@ -224,6 +222,8 @@ function showProject(el) {
       let ind = parent.getAttribute("ind");
       projects.splice(ind, 1);
       render();
+      setLocalStorage();
+      allProj();
     });
 
     const items = document.createElement("div");
@@ -310,6 +310,8 @@ function showProject(el) {
           let ind = parent.getAttribute("ind");
           el.tasks.splice(ind, 1);
           render();
+          setLocalStorage();
+          allProj();
         });         
         items.appendChild(task);
         task.appendChild(box1);
@@ -332,6 +334,10 @@ function allProj() {
     projects.forEach((el) => {
     showProject(el);
     })
+}
+
+function setLocalStorage() {
+  window.localStorage.setItem('user', JSON.stringify(projects))
 }
 
 
@@ -460,9 +466,8 @@ function editTask(att, val, el) {
     }
     editMod.style.display = "none";
     render();
-    if (showAll === true ) {
-      allProj();
-    }
+    setLocalStorage();
+    allProj();
   }  
 }
 
@@ -470,6 +475,12 @@ function editTask(att, val, el) {
 //call render on page load
 window.addEventListener('load', (event) => {
   setListeners();
+  if(localStorage.getItem('user') == null){
+    projects.push(new Project("Default"));
+  }
+  else {
+    projects = JSON.parse(window.localStorage.getItem('user'));
+  }
   render();
   showProject(projects[0]);
 });
