@@ -2,6 +2,7 @@ import { Project, Task } from "./construct";
 
 let projects = [];
 
+
 projects.push(new Project("Default"));
 
 //refreshes DOM
@@ -215,7 +216,7 @@ function showProject(el) {
       //shows and hides form for new task input
     const newTask = document.createElement("button");
     newTask.type = "button";
-    newTask.innerHTML = "+"
+    newTask.innerHTML = "+Add Task";
     newTask.classList.add("newTaskbtn");
     newTask.addEventListener("click", (event) => {
         taskForm(el);    
@@ -223,7 +224,7 @@ function showProject(el) {
     
    //appends tasks to projects
     for (let i = 0; i < el.tasks.length; i++) {
-        const cur = el.tasks[i];
+        let cur = el.tasks[i];
         //wrappers for tasks
         const task = document.createElement("div");
         task.classList.add("task");
@@ -354,6 +355,9 @@ function editTask(att, val, el) {
   butt.type = "button";  
   butt.id = "edit_submit";
   butt.innerHTML = "Submit"; 
+  butt.addEventListener("click", (event) => {
+    sub(att, el);
+   }); 
 
   let lab = document.createElement("label");
   lab.id = "mod_lab";
@@ -376,13 +380,29 @@ function editTask(att, val, el) {
     drop.add(opt1);
     drop.add(opt2);
     drop.add(opt3);
+    drop.addEventListener('keydown', event => {
+      let editMod = document.querySelector(".edit_modal");
+        if (editMod.style.display === "flex") {
+          if (event.isComposing || event.keyCode === 13) {
+            sub(att, el);
+          }
+        }    
+      });
 
   }
     else if (att === "Due Date") {
       let date = document.createElement("input");
       date.type = "date";
       date.id = "edit_date";
-      editMod.appendChild(date);      
+      editMod.appendChild(date);
+      date.addEventListener('keydown', event => {
+        let editMod = document.querySelector(".edit_modal");
+          if (editMod.style.display === "flex") {
+            if (event.isComposing || event.keyCode === 13) {
+              sub(att, el);
+            }
+          }    
+        });      
     }
     else {
       let inp = document.createElement("input");
@@ -395,7 +415,8 @@ function editTask(att, val, el) {
               sub(att, el);
             }
           }    
-        });    
+        });
+           
     lab.setAttribute("for", "editInput");
     editMod.appendChild(inp);
     inp.focus()
@@ -403,9 +424,7 @@ function editTask(att, val, el) {
   editMod.appendChild(butt);
   
   //event listeners for submitting edited attribute
-  butt.addEventListener("click", (event) => {
-   sub(att, el);
-  });
+  
   //submits new changes from edit popup
   function sub(att, el) {
     if (att === "Priority") {
@@ -415,19 +434,19 @@ function editTask(att, val, el) {
     } 
       else if (att === "Due Date") {
         let d = document.querySelector("#edit_date");
-        el.dueDate = d.value;
+        el.dueDate = d.value;        
       }    
         else {
-          let edit = document.querySelector("#editInput").value;
+          let edit = document.querySelector("#editInput").value;          
           switch (att) {
             case 'Task Title':
-              el.title = edit;
+              el.title = edit;              
               break;
             case 'Description':
-              el.description = edit;
+              el.description = edit;              
               break;
             case 'Project Title':
-              el.title = edit;
+              el.title = edit;              
               break;
       }    
     }
